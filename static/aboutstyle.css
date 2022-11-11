@@ -1,0 +1,39 @@
+h1{
+    text-align: center;
+    margin: 25px auto;
+}
+
+.wholeabout{
+    width: 100%;
+    margin: auto;
+
+}
+
+.container p{
+    padding: 28px;
+    line-height: 35px;
+    text-align: center;
+    font-size: 23px;
+    color: white;
+}
+
+.container {
+    background-color: #231c23;
+    width: 50%;
+    justify-content: center;
+    margin: auto;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 25px;
+}
+
+.connect{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.connect img{
+    height: 6vh;
+    margin: 6px 6px;
+}

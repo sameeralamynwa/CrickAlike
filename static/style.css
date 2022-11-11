@@ -1,0 +1,302 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
+*{
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+h1{
+    font-size: 24px;
+    text-align: center;
+    margin: 25px auto;
+}
+
+#navbar {
+    margin: 7px;
+    background-color: rgb(255, 255, 255);
+    height: 50px;
+    padding: 3px 25px;
+    display: flex;
+    width: 100%;
+}
+
+#navbar li a:hover{
+    color: rgb(49, 2, 49);
+}
+
+#navbar li{
+    list-style: none;
+    margin: 0px 20px;
+}
+
+#navbar ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#logo{
+    display: flex;
+    color: white;
+    align-items: center;
+    padding: 10px 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.navfirst img{
+    height: 50px;
+}
+
+#navbar li a{
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-weight: 800;
+    font-size: 20px;
+    padding-bottom: 12px;
+}
+
+#first, .general, h1{
+    font-family: 'Ubuntu', sans-serif;
+    overflow: hidden; /* Ensures the content is not revealed until the animation */
+    border-right: .15em solid orange; /* The typwriter cursor */
+    white-space: nowrap; Keeps the content on a single line
+    margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+    animation: 
+      typing 7.5s steps(40, end),
+      blink-caret .95s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  
+  /* The typewriter cursor effect */
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: white; }
+  }
+
+.wrapintro{
+    height: 100vh;
+    background-color: orangered;
+}
+
+#introsection{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    background: center / cover no-repeat url("/static/bg.jpg");
+    font-size: 25px;
+    background-color: #231c23;
+    height: 100%;
+}
+
+.introclass{
+    width: 80%;
+}
+
+#below{
+    display: flex;
+    background-color: white;
+    margin: 8vh;
+}
+
+#memberssection{
+
+}
+
+.connect{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#footer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #231c23;
+    color: white;
+    gap: 4px;
+    /* position: fixed; */
+    bottom: 0;
+    width: 100%;
+    /* z-index: -1; */
+    margin-top: 5vh;
+}
+
+#membersection h2{
+    height: 85px; 
+    width: 100%;
+    margin-bottom: 0px;
+}
+
+#membersection h2{
+    color: white;
+    font-size: 36px;
+    text-align: center;
+    padding-top: 20px;
+    background-color: #231c23;
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 30%;
+    margin: 23px 20px;
+    height: 30vh;
+    background-color: white;
+}
+.card h3{
+    text-align: center;
+    margin: 0 12px;
+    margin-top: 18px;
+    padding-bottom: 11px;
+}
+
+.card-box{
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-img{
+    height: 131px;
+    padding: 0 14px;
+    margin: 5px 9px;
+}
+
+.card-img img{
+    height: 80%; 
+}
+
+.card-content p{
+    /* font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
+    /* padding: 0 10px; */
+}
+
+.card-content p{
+    font-size: 18px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 1000;
+}
+
+.container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid #231c23;
+}
+
+.container li a{
+    text-decoration: none;
+}
+
+#mysearchinput {
+    margin-bottom: 15px;
+    font-size: 20px;
+    border: 2px solid black;
+    width: 60%;
+    height: 40px;
+    text-align: center;
+    border-radius: 10px;
+    margin: 15px auto;
+}
+
+.all{
+    display: flex;
+    width: 100%;
+}
+
+input,
+input::-webkit-input-placeholder {
+    font-size: 20px;
+    color: black;
+    font-weight: 550;
+    line-height: 3;
+}
+
+ul{
+    list-style: none;
+}
+
+.register {
+    /* margin-left: 500px; */
+    text-decoration: none;
+    list-style: none;
+    display: flex;
+}
+
+.navmain{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.logged{
+    margin-right: auto;
+    margin-left: auto;
+    padding: 0px 150px;
+}
+
+.logged li a{
+    width: 200px;
+    /* margin-left: 700px; */
+}
+
+#items{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#items li a{
+    display: block;
+    text-decoration: none;
+    margin: 12px;
+}
+
+/* Codes */
+
+pre {
+    font-family: monospace;
+    white-space: pre;
+    margin-left: 50px;
+    font-weight: bolder;
+    border-radius: 10px;
+    border-color: black;
+    margin-bottom: 40px;
+}
+
+.content{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.code-toolbar {
+    position: relative;
+    justify-content: center;
+}
+
+.code-toolbar pre{
+    padding: 10px;
+    justify-content: center;
+    background-color: #231c23;
+    width: 65%;
+    margin: 50px auto;
+    border-color: #231c23;
+    border: solid;
+    border-radius: 25px;
+}

@@ -1,0 +1,21 @@
+extends base.pug
+block scripts 
+    script(src='/static/index.js')
+block style 
+    style
+        include ../static/style.css
+        include ../static/contributestyle.css
+block content 
+    div.bucket
+        h1 Before you can watch, you must first sign up
+        form(action="/register", method="post", id="myregister")
+            input(type="text", class="input", name="name", placeholder="Enter your name")
+            input(type="text", class="input", name="handle", placeholder="Enter your handle")
+            input(type="email", class="input", name="email", placeholder="Enter your email")
+            input(type="password", class="input", name="password", placeholder="Enter your password")
+
+            button(class="btn") 
+                | Register
+    br
+    br
+    br

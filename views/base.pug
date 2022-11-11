@@ -1,0 +1,36 @@
+doctype html 
+html
+    head
+        link(rel='icon' href='/static/logo.jpg' type='image/icon type')
+        title CrickAlike #{title}
+        block scripts
+        block style
+    body
+        div.all
+            nav#navbar
+                div.navmain
+                    div.navfirst
+                        ul
+                            a(href = '/')
+                                img(src="/static/logo.jpg")
+                            li #[a(href = '/') Home]
+                            li #[a(href = '/about') About]
+                            li #[a(href = '/explore') Explore]
+                    div.navsecond
+                        if !isAuth
+                            ul.register
+                                li #[a(href = '/register') Register]
+                                li #[a(href = '/login') Login]
+                        if isAuth
+                            div.registerdiv
+                                ul.register
+                                    li 
+                                        a(href = '/') #{handle}
+                                    li  
+                                        a(href = '/logout') Log&nbsp;Out
+        block content
+    footer#footer 
+        div#fourth   
+        |   CricAlike (c) Copyright 2021-2023 | All rights reserved
+        div#fifth
+        |    Server time : #{moment().format()}  

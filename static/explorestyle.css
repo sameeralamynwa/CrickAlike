@@ -1,0 +1,19 @@
+h1{
+    text-align: center;
+    margin: 10px auto;
+}
+
+.container li a{
+    color: white;
+}
+
+.container li{
+    color: white;
+}
+
+.container{
+    background-color: #231c23;
+    width: 50%;
+    margin: auto;
+    border-radius: 25px;
+}

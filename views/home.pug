@@ -1,0 +1,39 @@
+
+extends base.pug
+block scripts 
+    script(src='/static/index.js')
+block style 
+    style
+        include ../static/style.css
+block content
+    div.wrapintro
+        section#introsection
+            div.firstdiv 
+                p#first One place to watch all your matches
+            p#second From T20 to ODI, we have got you all covered.
+    
+    section#membersection
+            h2 Our Mission
+            div#below
+                div.card
+                    h3 Watch Live Matches
+                    div.card-box
+                        div.card-img
+                            img(src="/static/1.jpg")
+                        div.card-content
+                            p We provide you matches complemented with extensive commentaries.
+
+                div.card
+                    h3 Explore Players
+                    div.card-box
+                        div.card-img
+                            img(src="/static/2.jpg")
+                        div.card-content
+                            p Learn more about your favourite players now.
+                div.card
+                    h3 Match Statistics
+                    div.card-box
+                        div.card-img
+                            img(src="/static/3.jpg")
+                        div.card-content
+                            p Analyse statistics of your team post match.

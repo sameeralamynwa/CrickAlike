@@ -1,0 +1,23 @@
+
+extends base.pug
+block scripts 
+    script(src='/static/index.js')
+block style 
+    style
+        include ../static/style.css
+        include ../static/aboutstyle.css
+block content
+    div.wholeabout
+        h1  About 
+        div.container
+            p   <i> <strong>We </strong> </i>, developed this website with the goal of providing users with the enriching experiences of the match for free. We also provide comprehensive and extensive commentaries.
+        br
+        br
+        br
+        div.connect 
+            h2   Connect :&nbsp;&nbsp;
+            a(href='https://www.linkedin.com/in/sameeralamynwa/')
+                //- img(id='linkedin', src='/static/linkedin.ico')
+            a(href='https://codeforces.com/profile/sameeralamynwa')
+                //- img(id='codeforces', src='/static/codeforces.png')
+        
