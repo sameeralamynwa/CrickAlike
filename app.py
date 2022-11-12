@@ -1,18 +1,27 @@
-from distutils.log import debug
+# Data Science specific libraries
 import numpy as np
 import pandas as pd
+
+# Flask libraries
 from flask import Flask, request, jsonify, render_template
-import pickle, os
+from flask_restful import Resource, Api
+
+# NLP specific libraries
 from gensim.parsing.preprocessing import remove_stopwords
 from nltk.stem import PorterStemmer  
 
+# General Python libraries
+from distutils.log import debug
+import pickle, os
+
 app = Flask(__name__)
+api = Api(app)
 
 shot_categorization = pickle.load(open('pickled_files/shot_categorization', 'rb'))
 tf_idf_shot = pickle.load(open('pickled_files/tf_idf_shot', 'rb'))
 final_ordered_features_shot = pickle.load(open('pickled_files/final_ordered_features_shot', 'rb'))
 
-even_classification = pickle.load(open('pickled_files/even_classification', 'rb'))
+event_classification = pickle.load(open('pickled_files/event_classification', 'rb'))
 tf_idf_event = pickle.load(open('pickled_files/tf_idf_event', 'rb'))
 final_ordered_features_event = pickle.load(open('pickled_files/final_ordered_features_event', 'rb'))
 
@@ -36,40 +45,43 @@ def text_cleaning(text):
         stemmed += " "
     return stemmed
 
-@app.route('/')
-def home():
-    return render_template('index.html')
 
-@app.route('/predict',methods=['POST'])
-def predict_conditions():
-    commentary = "what a great sweep to the off"
-    commentary = text_cleaning(commentary)
-    
-    transformed_features_shot = tf_idf_shot.transform([commentary]).toarray()[0]
-    input_features_shot = []
-    
-    for tf_idf_value in transformed_features_shot:
-        input_features_shot.append(tf_idf_value)
-    
-    df_input_shot = pd.DataFrame([np.array(input_features_shot)], columns = final_ordered_features_shot)
-    if shot_categorization.predict(df_input_shot)[0] == 0:
-        return render_template('index.html', prediction_text='Encountered class is {}'.format(-1))
-    
-    transformed_features_event = tf_idf_shot.transform([commentary]).toarray()[0]
-    input_features_event = []
-    
-    for tf_idf_value in transformed_features_event:
-        input_features_event.append(tf_idf_value)
-    
-    df_input_event = pd.DataFrame([np.array(input_features_event)], columns = final_ordered_features_event)
-    if even_classification.predict(df_input_shot)[0] == 0:
-        predicted_event = "out"
-    elif even_classification.predict(df_input_shot)[0] == 0:
-        predicted_event = "four"
-    else:
-        predicted_event = "six"
-    
-    return render_template('index.html', prediction_text = 'Encountered class is {}'.format(predicted_event))
+class Prediction(Resource):
+    def post(self, commentary):
+        print(commentary)
+        commentary = text_cleaning(commentary)
+        
+        transformed_features_shot = tf_idf_shot.transform([commentary]).toarray()[0]
+        input_features_shot = []
+        
+        for tf_idf_value in transformed_features_shot:
+            input_features_shot.append(tf_idf_value)
+        
+        df_input_shot = pd.DataFrame([np.array(input_features_shot)], columns = final_ordered_features_shot)
+        if shot_categorization.predict(df_input_shot)[0] == 0:
+            return jsonify({
+                'predicted_event': 'skip'
+            })
+        
+        transformed_features_event = tf_idf_shot.transform([commentary]).toarray()[0]
+        input_features_event = []
+        
+        for tf_idf_value in transformed_features_event:
+            input_features_event.append(tf_idf_value)
+        
+        df_input_event = pd.DataFrame([np.array(input_features_event)], columns = final_ordered_features_event)
+        if event_classification.predict(df_input_shot)[0] == 0:
+            predicted_event = "out"
+        elif event_classification.predict(df_input_shot)[0] == 0:
+            predicted_event = "four"
+        else:
+            predicted_event = "six"
+        
+        return jsonify({
+            'predicted_event': predicted_event
+        })
+
+api.add_resource(Prediction, "/predict_event/<string: commentary>")
 
 if __name__ == "__main__":
     app.run(port = int(os.getenv('PORT', 4444)), debug = True)
