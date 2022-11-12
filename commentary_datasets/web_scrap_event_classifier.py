@@ -14,7 +14,8 @@ PATH = "/Users/sundus/Downloads/chromedriver.exe"
 driver = webdriver.Chrome(PATH)
 
 matches = ["https://www.cricbuzz.com/cricket-match-highlights/50958/ind-vs-rsa-2nd-odi-south-africa-tour-of-india-2022", 
-           "https://www.cricbuzz.com/cricket-match-highlights/50951/ind-vs-rsa-1st-odi-south-africa-tour-of-india-2022"]
+           "https://www.cricbuzz.com/cricket-match-highlights/50951/ind-vs-rsa-1st-odi-south-africa-tour-of-india-2022",
+           "https://www.cricbuzz.com/cricket-match-highlights/50963/ind-vs-rsa-3rd-odi-south-africa-tour-of-india-2022"]
 
 target = []
 commentary = []
