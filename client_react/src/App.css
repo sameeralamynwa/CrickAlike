@@ -1,0 +1,156 @@
+.video-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.simulated-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: absolute;
+  top: 80px;
+  left: 6%;
+  font-weight: 500;
+}
+
+.button-container {
+  padding: 10px 20px 10px 20px;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: white;
+  color: rgb(32, 49, 97);
+}
+
+.button-out-container {
+  padding: 10px 20px 10px 20px;
+  cursor: pointer;
+  border-radius: 8px;
+  color: white;
+  background-color: rgb(32, 49, 97);
+}
+
+.video-container {
+  background-color: black;
+  position: absolute;
+  object-fit: fill;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+}
+
+#scroll-text {
+  /* animation properties */
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+  -webkit-animation: my-animation 5s linear infinite;
+  animation: my-animation 5s linear infinite;
+}
+
+@-webkit-keyframes my-animation {
+  from { -webkit-transform: translateX(-100%); }
+  to { -webkit-transform: translateX(100%); }
+}
+
+@keyframes my-animation {
+  from {
+    -moz-transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+  to {
+    -moz-transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+}
+
+.scorecard1 {
+  position: absolute;
+  bottom: 0px;
+  left: 5%;
+  right: 5%;
+  color: white;
+  background-image: linear-gradient(to right,rgb(12, 23, 52),rgb(50, 86, 187));
+  /* background-color: rgb(255, 255, 255); */
+  display: flex;
+  flex-direction: row;
+  font-size: 16px;
+  padding: 8px;
+  /* font-weight: 500; */
+}
+
+.scorecard {
+  position: absolute;
+  bottom: 50px;
+  left: 5%;
+  right: 5%;
+  color: white;
+  background-image: linear-gradient(to right,rgb(12, 23, 52),rgb(50, 86, 187));
+  /* background-color: rgb(24, 39, 79); */
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.scorecard-team-info {
+  padding: 10px 20px 10px 20px;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.5);
+  text-shadow: 2px 2px 10px #00000015;
+}
+
+.scorecard-scorecard {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  color: rgb(24, 39, 79);
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  margin: 4px 20px 4px 0px;
+  width: 100px;
+}
+
+.scorecard-over-card {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 4px
+}
+
+.scorecard-team-totalOver {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.batsman-container {
+  font-weight: 500;
+  font-size: 18px;
+  margin-left: 50px;
+  margin-right: 100px;
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+
+}
+
+.batsman-info {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.bowls-bracket {
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.batsman-bowls {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+}

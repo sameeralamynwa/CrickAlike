@@ -112,8 +112,8 @@ app.get('/explore', function (req, res) {
     MatchSchemaModel.find().then(result => {
         if(result.length){
             for(let i = 0; i < result.length; ++i){
-                name.push(result[i].tournament + " - " + result[i].team_one + " vs " + result[i].team_two);
-                path.push(convertToPath(result[i].tournament));
+                name.push(result[i].tournament + " " + result[i].format + " - " + result[i].team_one + " vs " + result[i].team_two);
+                path.push(convertToPath(result[i].tournament + "-" + result[i].format + "-" + result[i].team_one + "-" + result[i].team_two));
             }
         }
         else{
@@ -132,6 +132,15 @@ app.get('/explore', function (req, res) {
         res.status(404).end("An error occured while fetching the information for all matches.");
     });
 });
+
+app.get('/explore/:path', function(req, res) {
+    let path = req.params.path;
+
+    /*
+        Read video and convert it to text
+    */
+   
+})
 
 app.post('/register', async function (req, res) {
     let {name, handle, email, password} = req.body;
