@@ -1,16 +1,12 @@
-# Data Science specific libraries
 import numpy as np
 import pandas as pd
 
-# Flask libraries
 from flask import Flask, request, jsonify, render_template
 from flask_restful import Resource, Api
 
-# NLP specific libraries
 from gensim.parsing.preprocessing import remove_stopwords
 from nltk.stem import PorterStemmer  
 
-# General Python libraries
 from distutils.log import debug
 import pickle, os
 
@@ -19,11 +15,11 @@ api = Api(app)
 
 shot_categorization = pickle.load(open('pickled_files/shot_categorization', 'rb'))
 tf_idf_shot = pickle.load(open('pickled_files/tf_idf_shot', 'rb'))
-final_ordered_features_shot = pickle.load(open('pickled_files/final_ordered_features_shot', 'rb'))
+final_ordered_features_shot = pickle.load(open('pickled_files/final_ordered_shot', 'rb'))
 
 event_classification = pickle.load(open('pickled_files/event_classification', 'rb'))
 tf_idf_event = pickle.load(open('pickled_files/tf_idf_event', 'rb'))
-final_ordered_features_event = pickle.load(open('pickled_files/final_ordered_features_event', 'rb'))
+final_ordered_features_event = pickle.load(open('pickled_files/final_ordered_event', 'rb'))
 
 def ngrams(word_list):
     all_grams = []
@@ -47,7 +43,7 @@ def text_cleaning(text):
 
 
 class Prediction(Resource):
-    def post(self, commentary):
+    def get(self, commentary):
         print(commentary)
         commentary = text_cleaning(commentary)
         
@@ -81,7 +77,7 @@ class Prediction(Resource):
             'predicted_event': predicted_event
         })
 
-api.add_resource(Prediction, "/predict_event/<string: commentary>")
+api.add_resource(Prediction, "/predict_event/<string:commentary>", methods = ['GET'])
 
 if __name__ == "__main__":
     app.run(port = int(os.getenv('PORT', 4444)), debug = True)

@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const sdk = require("microsoft-cognitiveservices-speech-sdk");
 
 const app = express()
 app.locals.moment = require('moment');
@@ -134,12 +135,48 @@ app.get('/explore', function (req, res) {
 });
 
 app.get('/explore/:path', function(req, res) {
-    let path = req.params.path;
+    let path = req.params.path + ".wav";
 
-    /*
-        Read video and convert it to text
-    */
-   
+    const speechConfig = sdk.SpeechConfig.fromSubscription("a99e3201094941d99e9a24687843c47e", "eastus");
+    const audioConfig = sdk.AudioConfig.fromWavFileInput(fs.readFileSync("match_videos/world-cup-t20-india-pakistan.wav"));
+
+    speechConfig.speechRecognitionLanguage = "en-US";
+    const recognizer = new sdk.SpeechRecognizer(speechConfig, audioConfig);
+
+    recognizer.recognizing = (s, e) => {
+        console.log(`RECOGNIZING: Text=${e.result.text}`);
+    };
+
+    recognizer.recognized = (s, e) => {
+        if (e.result.reason == sdk.ResultReason.RecognizedSpeech) {
+            console.log(`RECOGNIZED: Text=${e.result.text}`);
+        }
+        else if (e.result.reason == sdk.ResultReason.NoMatch) {
+            console.log("NOMATCH: Speech could not be recognized.");
+        }
+    };
+
+    recognizer.canceled = (s, e) => {
+        console.log(`CANCELED: Reason=${e.reason}`);
+
+        if (e.reason == sdk.CancellationReason.Error) {
+            console.log(`"CANCELED: ErrorCode=${e.errorCode}`);
+            console.log(`"CANCELED: ErrorDetails=${e.errorDetails}`);
+            console.log("CANCELED: Did you set the speech resource key and region values?");
+        }
+
+        recognizer.stopContinuousRecognitionAsync();
+    };
+
+    recognizer.sessionStopped = (s, e) => {
+        console.log("\n    Session stopped event.");
+        recognizer.stopContinuousRecognitionAsync();
+    };
+
+    recognizer.startContinuousRecognitionAsync();
+
+    
+
 })
 
 app.post('/register', async function (req, res) {
