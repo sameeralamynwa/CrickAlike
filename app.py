@@ -5,10 +5,14 @@ from flask import Flask, request, jsonify, render_template
 from flask_restful import Resource, Api
 
 from gensim.parsing.preprocessing import remove_stopwords
-from nltk.stem import PorterStemmer  
+from nltk.stem import PorterStemmer
+import re
 
 from distutils.log import debug
 import pickle, os
+import warnings
+
+warnings.filterwarnings('ignore')
 
 app = Flask(__name__)
 api = Api(app)
@@ -37,10 +41,14 @@ def text_cleaning(text):
     text = remove_stopwords(text)
     stemmed = ""
     for word in text.split():
-        stemmed += ps.stem(word)
+        word = re.sub(r"[^a-zA-Z]+", '', word)
+        word = word.strip()
+        word = word.lower()
+        word = ps.stem(word)
+        word = word.strip()
+        stemmed += word
         stemmed += " "
     return stemmed
-
 
 class Prediction(Resource):
     def get(self, commentary):
@@ -59,16 +67,16 @@ class Prediction(Resource):
                 'predicted_event': 'skip'
             })
         
-        transformed_features_event = tf_idf_shot.transform([commentary]).toarray()[0]
+        transformed_features_event = tf_idf_event.transform([commentary]).toarray()[0]
         input_features_event = []
         
         for tf_idf_value in transformed_features_event:
             input_features_event.append(tf_idf_value)
         
         df_input_event = pd.DataFrame([np.array(input_features_event)], columns = final_ordered_features_event)
-        if event_classification.predict(df_input_shot)[0] == 0:
+        if event_classification.predict(df_input_event)[0] == 0:
             predicted_event = "out"
-        elif event_classification.predict(df_input_shot)[0] == 0:
+        elif event_classification.predict(df_input_event)[0] == 1:
             predicted_event = "four"
         else:
             predicted_event = "six"
