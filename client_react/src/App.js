@@ -3,8 +3,6 @@ import ReactPlayer from "react-player";
 import React, { useState, useEffect } from "react";
 import IndianPlayers from "./players/India";
 
-
-
 function App() {
     const [url, setUrl] = useState("videos/CutScene1.mp4");
     const [runs, setRuns] = useState(0);
@@ -30,6 +28,8 @@ function App() {
 
     useEffect(() => {
         setFlag(false);
+        const interval = setInterval(() => getData(), 100);
+        return () => clearInterval(interval);
     });
 
     useEffect(() => {
@@ -107,6 +107,18 @@ function App() {
             setOverNumber(overNumber + 1);
         }
     }, [bowlNumber]);
+
+    async function getData() {
+        clearInterval(this);
+        const data = await fetch("http://localhost:5000/event/");
+        const event = await data.text();
+        console.log(event);
+        if (event == "four") {
+            playFour();
+        } else if (event == "six") {
+            playSix();
+        }
+    }
 
     function playOne() {
         setBowlStatus(1);

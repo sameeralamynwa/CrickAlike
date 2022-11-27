@@ -15,6 +15,7 @@ const { query } = require("express");
 const { userInfo } = require("os");
 const session = require("express-session");
 const MongoDBSession = require("connect-mongodb-session")(session);
+const cors = require('cors')
 
 const URL = 'mongodb+srv://admin:123@cluster0.bexjc35.mongodb.net/?retryWrites=true&w=majority';
 
@@ -23,6 +24,8 @@ mongoose.connect(URL, {useNewUrlParser: true});
 
 // const port = process.env.PORT || 5000;
 const port = 5000;
+
+app.use(cors({origin: "*"}))
 
 app.use('/static', express.static('static'));
 app.use(express.urlencoded({ extended: true }));
@@ -91,6 +94,13 @@ app.get('/', function (req, res) {
     res.status(200).render('home.pug', params);
 });
 
+let event = "nothing"
+
+app.get('/event', function(req, res) {
+    res.send(event);
+    event = "nothing"
+})
+
 app.get('/login', function (req, res) {
     const params = {
         isAuth: req.session.isAuth,
@@ -138,8 +148,7 @@ app.get('/explore', function (req, res) {
 
 app.get('/explore/:path', async function(req, res) {
     let path = req.params.path + ".wav";
-
-    all_commentaries = []
+    const model_url = "http://localhost:4444/predict_event"
 
     const speechConfig = sdk.SpeechConfig.fromSubscription("a99e3201094941d99e9a24687843c47e", "eastus");
     const audioConfig = sdk.AudioConfig.fromWavFileInput(fs.readFileSync("match_videos/world-cup-t20-india-pakistan.wav"));
@@ -154,7 +163,28 @@ app.get('/explore/:path', async function(req, res) {
     recognizer.recognized = (s, e) => {
         if (e.result.reason == sdk.ResultReason.RecognizedSpeech) {
             console.log(`RECOGNIZED: Text=${e.result.text}`);
-            all_commentaries.push(e.result.text)
+            
+            let body = {
+                'commentary': e.result.text
+            };
+
+            const ball_prediction = async () => {
+                try {
+
+                    const res = await axios.get(model_url + '/' + body.commentary)
+                    console.log(`Status: ${res.status}`)
+                    console.log('Body: ', res.data)
+
+                    event = res.data.predicted_event;
+                    console.log(event)
+                    
+                }
+                catch (err) {
+                    console.error(err)
+                }
+            }
+              
+            ball_prediction()
         }
         else if (e.result.reason == sdk.ResultReason.NoMatch) {
             console.log("NOMATCH: Speech could not be recognized.");
@@ -178,31 +208,13 @@ app.get('/explore/:path', async function(req, res) {
         recognizer.stopContinuousRecognitionAsync();
     };
 
-    // recognizer.startContinuousRecognitionAsync();
+    recognizer.startContinuousRecognitionAsync();
 
-    for (text in all_commentaries){
-        // console.log(text)
-    }
-
-    const model_url = "http://localhost:4444/predict_event"
-
-    let body = {
-        'commentary': "Shaheen Afridi to Kohli, FOUR, short ball, down on to his hips, Kohli pivots on the back foot and pulls it over short fine for a four. That wasn't a bad ball and was put away. India still in this. They needed a big over and they have got one. 17 have come off the over."
+    // let body = {
+        // 'commentary': "Shaheen Afridi to Kohli 4. That's a four. Kohli gets to his 50 has been an excellent knock that was short. Kohli fetches it from well off side and pulls it wide off deep mid that landed just short of the fence. But this has been such an excellent knock from Kohli."
         // 'commentary': "Maharaj to Ishan Kishan, SIX, fraction short and Ishan Kishan is onto it in a flash! Swivels on the back foot and thrashes the pull flat and long over deep mid-wicket"
         // 'commentary': "Ngidi to Shreyas Iyer, out Caught by Rabada!! There's the wicket and most probably the game. Ngidi kept hitting the deck hard and the line was also tight. Iyer just couldn't get it away and he perishes trying to play the big shot. This was a short of length delivery and Iyer is deceived by the extra bounce, the pull comes off the higher part of the bat and the ball lobs to mid-on, simple catch to Rabada. Shreyas Iyer c Rabada b Ngidi 50(37) [4s-8]"
-    };
-
-    const ball_prediction = async () => {
-        try {
-          const res = await axios.get(model_url + '/' + body.commentary)
-          console.log(`Status: ${res.status}`)
-          console.log('Body: ', res.data)
-        } catch (err) {
-          console.error(err)
-        }
-      }
-      
-    ball_prediction()
+    // };
 })
 
 app.post('/register', async function (req, res) {
