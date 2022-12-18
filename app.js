@@ -170,13 +170,23 @@ app.get('/explore/:path', async function(req, res) {
 
             const ball_prediction = async () => {
                 try {
+                    body.commentary = body.commentary.replace("4", " four ");
+                    body.commentary = body.commentary.replace("6", " six ");
+                    body.commentary = body.commentary.replace("sick", " six ");
 
                     const res = await axios.get(model_url + '/' + body.commentary)
                     console.log(`Status: ${res.status}`)
-                    console.log('Body: ', res.data)
-
                     event = res.data.predicted_event;
-                    console.log(event)
+
+                    if (body.commentary.includes("four")){
+                        res.data = { "predicted_event": 'four' }
+                        event = "four"
+                    }
+                    else if(body.commentary.includes("six")){
+                        res.data = { "predicted_event": 'six' };
+                        event = "six"
+                    }
+                    console.log('Body: ', res.data)
                     
                 }
                 catch (err) {
