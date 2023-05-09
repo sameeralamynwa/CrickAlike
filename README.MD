@@ -1,8 +1,8 @@
-CrickAlike: Animated Cricket Match Recreation Platform
+## CrickAlike: Animated Cricket Match Recreation Platform
 
 CrickAlike is a capstone project developed to create a platform that converts pre-recorded cricket match videos into animated content using natural language processing (NLP) and machine learning techniques. The platform aims to recreate the events of the match in the form of engaging animations, based on the commentary provided by the commentators.
 
-Project Overview:
+## Project Overview:
 - Gathering real-life match content: Collecting pre-recorded cricket match videos to serve as the foundation for the animated scenes.
 - Prototype development: Creating a proof-of-concept to showcase the potential of CrickAlike, including a presentation (PPT) to explain the concept.
 - Mentor's approval: The project idea was presented to and approved by the senior teacher acting as the mentor.
